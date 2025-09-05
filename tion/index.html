@@ -124,6 +124,36 @@
       50%  { transform: translateX(130%)  rotate(0.001deg); opacity: 1; }
       100% { transform: translateX(130%)  rotate(0.001deg); opacity: 0; }
     }
+
+    .subscribe {
+        transform: rotate(var(--tilt));
+        margin: clamp(2rem, 3vw, 3rem);
+    }
+
+   .cta-btn {
+     position: relative;
+     width: 50%;
+     padding: clamp(12px, 1.5vw, 24px) clamp(20px, 4vw, 60px);
+     font-family: "Cinzel", Georgia, serif;
+     font-weight: 700;
+     font-size: clamp(1rem, 2.5vw, 2rem);
+     color: #000;
+     background: linear-gradient(180deg,
+          #fff4c4 0%,
+          #ffd666 14%,
+          #b8860b 34%,
+          #fff4bf 52%,
+          #9a7611 68%,
+          #ffdc73 86%,
+          #7a5f0c 100%
+        );
+     border: none;
+     border-radius: clamp(8px, 2vw, 16px);
+     text-decoration: none;
+     text-align: center;
+     box-shadow: 0 0 12px rgba(255,200,0,0.8), 0 4px 12px rgba(0,0,0,0.5);
+     cursor: pointer;
+   }
   </style>
 </head>
 <body>
@@ -138,8 +168,15 @@
   <!-- Titles -->
   <main class="wrap">
     <div class="stack">
-      <h1 class="gold">Baby of the Week Subscription</h1>
-      <h2 class="gold small">Coming to Your Mailbox Next Quarter</h2>
+      <h1 class="gold">Baby of the Week</h1>
+      <h1 class="gold">Subscription</h1>
+      <h2 class="gold small">Coming to Your Mailbox</h2>
+      <h2 class="gold small">Next Quarter</h2>
+      <div class="subscribe">
+        <a href="https://buy.stripe.com/3cIdRacdffXc9PBgr92880a" class="cta-btn" target="_blank" rel="noopener noreferrer">
+          Subscribe Today
+        </a>
+      </div>
     </div>
   </main>
   <script async src="https://eocampaign1.com/form/4f7708ea-8a97-11f0-9354-7f93a4af6168.js" data-form="4f7708ea-8a97-11f0-9354-7f93a4af6168"></script>
