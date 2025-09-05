@@ -1,71 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Baby of the Week: Subscription</title>
+
+  <!-- Optional: elegant engraved font for a plated look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&display=swap" rel="stylesheet" />
+
   <style>
-    :root {
-      --red: #c62828;
-      --blue: #1565c0;
-      --white: #ffffff;
-      --background: #f4f4f4;
-      --text: #1a1a1a;
+    :root{
+      --tilt: -4deg;
+      --shadow-1: rgba(0,0,0,0.85);
+      --shadow-2: rgba(0,0,0,0.55);
     }
 
-    * {
+    html, body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      height: 100%;
+      overflow: hidden; /* no scroll */
+      background: #000; /* fallback while GIF loads */
     }
 
-    body {
-      background-color: var(--background);
-      color: var(--text);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+    #bg {
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      pointer-events: none;
+      user-select: none;
     }
 
-    .content {
+    /* Centered stack for the titles */
+    .wrap {
+      position: relative;
+      height: 100dvh;
+      width: 100vw;
+      display: grid;
+      place-items: center;
       text-align: center;
     }
 
-    h1 {
-      font-size: 2.75rem;
+    .stack {
+      display: grid;
+      gap: clamp(8px, 2.5vw, 24px);
+    }
+
+    /* --- GOLD FOIL TEXT EFFECT --- */
+    .gold {
+      font-family: "Cinzel", Georgia, "Times New Roman", serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 7.2vw, 9rem);
+      line-height: 1.02;
+      letter-spacing: clamp(0.015em, 0.18vw, 0.075em);
+      margin: 0;
+      transform: rotate(var(--tilt));
+      position: relative;
+
+      /* 1) Texture + color stack clipped to text */
+      background-image:
+        /* rich gold gradient for body color */
+        linear-gradient(180deg,
+          #fff4c4 0%,
+          #ffd666 14%,
+          #b8860b 34%,
+          #fff4bf 52%,
+          #9a7611 68%,
+          #ffdc73 86%,
+          #7a5f0c 100%
+        ),
+        /* foil texture (Unsplash) */
+        url("https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1920&auto=format&fit=crop");
+      background-size: 100% 100%, 140% 140%;
+      background-position: 50% 50%, 0% 50%;
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      /* 2) Depth via shadows (outer + soft underglow) */
+      filter:
+        drop-shadow(0 clamp(2px, 0.5vw, 8px) clamp(4px, 0.8vw, 14px) var(--shadow-1))
+        drop-shadow(0 0 clamp(2px, 0.5vw, 10px) var(--shadow-2));
+
+      /* 3) Slow parallax shift of the foil texture */
+      animation: foilShift 18s linear infinite;
+    }
+
+    .gold.small {
       font-weight: 700;
-      color: var(--blue);
-      border-bottom: 4px solid var(--red);
-      display: inline-block;
-      padding-bottom: 0.3rem;
+      font-size: clamp(1.2rem, 4.2vw, 4.2rem);
+      letter-spacing: clamp(0.01em, 0.12vw, 0.05em);
     }
 
-    p {
-      margin-top: 1.5rem;
-      font-size: 1.5rem;
-      color: var(--red);
-      font-weight: 500;
+    /* Shimmer sweep highlight */
+    .gold::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      /* a narrow bright band that sweeps across */
+      background:
+        linear-gradient(110deg,
+          rgba(255,255,255,0) 35%,
+          rgba(255,255,255,0.85) 50%,
+          rgba(255,255,255,0) 65%
+        );
+      mix-blend-mode: screen;
+      transform: translateX(-130%) rotate(0.001deg);
+      animation: sweep 4.8s ease-in-out infinite;
     }
 
-    @media (max-width: 500px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      p {
-        font-size: 1.25rem;
-      }
+    @keyframes foilShift {
+      0%   { background-position: 50% 50%,   0% 50%; }
+      50%  { background-position: 50% 50%, 100% 50%; }
+      100% { background-position: 50% 50%,   0% 50%; }
+    }
+    @keyframes sweep {
+      0%   { transform: translateX(-130%) rotate(0.001deg); opacity: 0.0; }
+      15%  { opacity: 1; }
+      50%  { transform: translateX(130%)  rotate(0.001deg); opacity: 1; }
+      100% { transform: translateX(130%)  rotate(0.001deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="content">
-    <h1>Baby of the Week: Subscription</h1>
-    <p>Coming Fall 2025</p>
-  </div>
+  <!-- Background GIF -->
+  <img
+    id="bg"
+    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmlpMGRoMm9uamZ6cHdjdTl2d3JxcHFibGt0OHp2NXo4NDFkY3NhOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ihRmRCxJuIi3pCORTL/giphy.gif"
+    alt=""
+    aria-hidden="true"
+  />
+
+  <!-- Titles -->
+  <main class="wrap">
+    <div class="stack">
+      <h1 class="gold">Baby of the Week Subscription</h1>
+      <h2 class="gold small">Coming to Your Mailbox Next Quarter</h2>
+    </div>
+  </main>
 </body>
 </html>
-
